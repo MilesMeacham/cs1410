@@ -35,19 +35,19 @@ public:
 	//Purpose: Returns the Height of the rectangle
 	//Parameter: none
 	//Return: int (height)
-	int getHeight();
+	int getHeight() const;
 
 	//The getWidth function
 	//Purpose: Returns the Width of the rectangle
 	//Parameter: none
 	//Return: int (width)
-	int getWidth();
+	int getWidth() const;
 
 	//The getArea function
 	//Purpose: Returns the Area of the rectangle
 	//Parameter: none
 	//Return: int (width * height)
-	int getArea();
+	int getArea() const;
 
 
 };

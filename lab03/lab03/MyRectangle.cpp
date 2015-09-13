@@ -28,17 +28,17 @@ MyRectangle::MyRectangle(int h, int w)
 	width = w;
 }
 
-int MyRectangle::getHeight()
+int MyRectangle::getHeight() const
 {
 	return height;
 }
 
-int MyRectangle::getWidth()
+int MyRectangle::getWidth() const
 {
 	return width;
 }
 
-int MyRectangle::getArea()
+int MyRectangle::getArea() const
 {
 	return width * height;
 }
