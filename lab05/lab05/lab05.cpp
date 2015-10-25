@@ -28,23 +28,16 @@ int calculateSquare(int toBeSquared)
 	int square = 0;
 	string error;
 
-	//try catch to see if the number is 0 or negative.
-	try {
-		if (toBeSquared == 0)
-		{
-			error = "zero";
-			throw 0;
-		}
-		else if (toBeSquared < 0) {
-			error = "a negative number";
-			throw 1;
-		}
-	}
-	catch (int e)
+	if (toBeSquared == 0)
 	{
-		cout << "Error: You entered " << toBeSquared << "." << endl;
-		cout << "This function cannot divide by " << error << "." << endl;
+		error = "zero";
+		throw 0;
 	}
+	else if (toBeSquared < 0) {
+		error = "a negative number";
+		throw 1;
+	}
+
 
 	//if number passes the try catch it will get squared here
 	square = pow(toBeSquared, 2);
@@ -58,16 +51,27 @@ int main()
 {	
 	//declaring variables
 	int userInput;
-	int squaredNumber;
+	int squaredNumber = 0;
 
 	//prompt user to enter a positive, non-zero number and set the input to 'userInput'
 	cout << "Please enter a positive, non-zero number.\n";
 	cin >> userInput;
 	cout << endl;
 
-	//call the calculateSquare function using 'userInput'
-	//squaredNumber will equal the return value
-	squaredNumber = calculateSquare(userInput);
+	//try catch to see if there is an exception
+	try {
+		//call the calculateSquare function using 'userInput'
+		//squaredNumber will equal the return value
+		squaredNumber = calculateSquare(userInput);
+
+	}
+	catch (int e)
+	{
+		cout << "Error: You entered " << e << "." << endl;
+		cout << "This function cannot divide by " << e << "." << endl;
+	}
+
+	
 
 	//if the function returned a positive number, print it
 	if (squaredNumber > 0) {
