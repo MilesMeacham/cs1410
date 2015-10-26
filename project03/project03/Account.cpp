@@ -65,16 +65,21 @@ void Account::makeWithdrawal(const double& withdrawal)
 
 void Account::readData(ifstream& inFile)
 {
-	if (inFile.eof())
-		throw Exception(1, "End of file reached while creating object");
-
-	if (inFile.fail())
-		throw Exception(2, "Unknown Error while reading data from the file");
 
 	inFile >> accountNumber;
+	//check to see if read worked
+	if (inFile.fail())
+		throw Exception(2, "Couldn't read Account Number");
+
 	inFile.ignore();
+
 	accountHolder->readData(inFile);
+
 	inFile >> accountBalance;
+	//check to see if read worked
+	if (inFile.fail())
+		throw Exception(3, "Couldn't read Account Balance");
+
 	inFile.ignore();
 }
 
@@ -103,22 +108,23 @@ SavingsAccount::SavingsAccount(Person* p, int acctNum, double acctBal, double in
 
 double SavingsAccount::getAccountBalance() const
 {
+	// Variables to find amount of interest earned to add to balance
 	double currentBalance = accountBalance;
+	double interestEarned = currentBalance * interestRate;
 
-	currentBalance += interestRate;
+	currentBalance += interestEarned;
 
 	return currentBalance;
 }
 
 void SavingsAccount::readData(ifstream& inFile)
 {
-	if (inFile.eof())
-		throw Exception(1, "End of file reached while creating object");
-
-	if (inFile.fail())
-		throw Exception(2, "Unknown Error while reading data from the file");
 
 	inFile >> interestRate;
+	//check to see if read worked
+	if (inFile.fail())
+		throw Exception(2, "Couldn't read Interest Rate");
+
 	Account::readData(inFile);
 	
 }
@@ -157,13 +163,12 @@ double CheckingAccount::getAccountBalance() const
 
 void CheckingAccount::readData(ifstream& inFile)
 {
-	if (inFile.eof())
-		throw Exception(1, "End of file reached while creating object");
-
-	if (inFile.fail())
-		throw Exception(2, "Unknown Error while reading data from the file");
 
 	inFile >> monthlyFee;
+	//check to see if read worked
+	if (inFile.fail())
+		throw Exception(5, "Couldn't read Monthly Fee");
+
 	Account::readData(inFile);
 
 }

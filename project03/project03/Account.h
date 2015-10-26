@@ -22,7 +22,6 @@ class Account
 {
 private:
 	int accountNumber;
-	//double accountBalance;
 	Person* accountHolder;
 	double fileData;
 

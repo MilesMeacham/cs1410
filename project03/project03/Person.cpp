@@ -45,8 +45,6 @@ string Person::getAddress() const
 
 void Person::readData(ifstream& inFile)
 {
-	if (inFile.eof())
-		return;
 	
 	getline(inFile, name);
 	if (!inFile)

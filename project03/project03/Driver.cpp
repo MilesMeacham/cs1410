@@ -46,24 +46,14 @@ double withdrawal = 100;
 int main()
 {
 
+	//declaring a vector of account pointers
 	vector<Account*> accountPointers;
 
-	//creating objects of type "Person"
-	//Person person1(bilbo, bilboAddress);
-	//Person person2(gandalf, gandalfAddress);
-	//Person person3(elrond, elrondAddress);
 
-	//creating objects of type "Account"
+	//creating objects of type SavingsAccount and CheckingAccount
 	accountPointers.push_back(new SavingsAccount (new Person(bilbo, bilboAddress), accountOne, ACCOUNT_ONE_BALANCE, ACCOUNT_ONE_INTEREST_RATE));
 	accountPointers.push_back(new CheckingAccount (new Person(gandalf, gandalfAddress), accountTwo, ACCOUNT_TWO_BALANCE, ACCOUNT_TWO_MONTHLY_FEE));
 	accountPointers.push_back(new SavingsAccount (new Person(elrond, elrondAddress), accountThree, ACCOUNT_THREE_BALANCE, ACCOUNT_THREE_INTEREST_RATE));
-	//Account secondAccount(person2, accountTwo, ACCOUNT_TWO_BALANCE);
-	//Account thirdAccount(person3, accountThree, ACCOUNT_THREE_BALANCE);
-
-	//putting Account Objects into a vector
-	//myAccounts.push_back(firstAccount);
-	//myAccounts.push_back(secondAccount);
-	//myAccounts.push_back(thirdAccount);
 
 	//Creating an ofstream and ifstream object
 	ofstream outputFile;
@@ -86,12 +76,18 @@ int main()
 	for (int x = 0; x < accountPointers.size(); x++)
 	{
 		accountPointers[x]->writeData(outputFile);
-		//myAccounts[x].writeData(outputFile);
 	}
 
 	//close the file and clear the vector
 	outputFile.close();
+
+	for (int x = 0; x < accountPointers.size(); x++)
+	{
+		delete (accountPointers[x]);
+	}
+
 	accountPointers.clear();
+
 
 	inputFile.open("Accounts.txt");
 
@@ -103,62 +99,35 @@ int main()
 		return 0;
 	}
 
+	//local variables
 	string type;
 	Account* aPtr;
 	int myCounter = 0;
 
-
+	//read through the file
 	while (inputFile >> type)
 	{
 
-		if (type == "savings") {
+		//check to see if it is a savings or a checking account
+		if (type == "savings") 
 			aPtr = new SavingsAccount();
-			cout << "Savings Account" << endl;
-			system("PAUSE");
-		}
 		else if (type == "checking")
 			aPtr = new CheckingAccount();
 		else
 		{
-
+			//Bad data
 			cout << "\nunexpected data in file, program will now terminate";
 			system("PAUSE");
 			exit(1);
 		}
 		
+		//read the rest of the data
 		aPtr->readData(inputFile);
-		accountPointers[myCounter] = aPtr;
-		myCounter++;
+
+		//assign the data to the vector accountPointers.
+		accountPointers.push_back(aPtr);
 
 	}
-
-
-
-
-	/*
-	//This will put the contents of the file into the Vector
-	do
-	{
-		try
-		{
-				//Create new Account Object
-				Account newAccount;
-
-				//read the file and input the information
-				newAccount.readData(inputFile);
-
-				//add the account to the "myAccounts" array
-				myAccounts.push_back(newAccount);
-		}
-		//Output error message if fails
-		catch (Exception error)
-		{
-			cout << "Error #" << error.getErrorNum() << " Message: " << error.getErrorMessage() << endl;
-		}
-	//wait until the end of the file is reached
-	} while (!inputFile.eof());
-
-	*/
 
 	//deposit money into the accounts
 	for (int i = 0; i < accountPointers.size(); i++)
@@ -174,7 +143,6 @@ int main()
 
 	//call function "displayAccounts"
 	displayAccounts(accountPointers);
-	//displayAccounts(myAccounts);
 
 
 	system("Pause");
